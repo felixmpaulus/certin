@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ClientNavigation } from './ClientNavigationigation'
+import { ClientNavigation } from './ClientNavigation'
 
 export function Header() {
   return (
