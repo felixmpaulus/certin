@@ -1,170 +1,147 @@
-"use client"
+'use client'
 
-import * as React from "react"
+import * as React from 'react'
 import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
+  Activity,
+  Clock,
+  Files,
+  FileText,
+  HandHelping,
+  Handshake,
+  Home,
   PieChart,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react"
+  Route,
+  Sprout,
+  Target,
+  Truck,
+  Unplug,
+} from 'lucide-react'
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
+import { NavMain } from '@/components/nav-main'
+import { NavUser } from '@/components/nav-user'
+import { TeamSwitcher } from '@/components/team-switcher'
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
+} from '@/components/ui/sidebar'
 
 // This is sample data.
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: 'shadcn',
+    email: 'm@example.com',
+    avatar: '/avatars/shadcn.jpg',
   },
   teams: [
     {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
+      name: 'Acme Inc',
+      logo: Home,
+      plan: 'Enterprise',
     },
     {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
+      name: 'Acme Corp.',
+      logo: Activity,
+      plan: 'Startup',
     },
     {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
+      name: 'Evil Corp.',
+      logo: Target,
+      plan: 'Free',
     },
   ],
   navMain: [
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
+      title: 'Dashboard',
+      url: '#',
+      icon: Home,
       isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
+      items: [],
     },
     {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
+      title: 'Running',
+      url: '#',
+      icon: Handshake,
+      category: 'TENDERS',
+      items: [],
     },
     {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
+      title: 'Opportunities',
+      url: '#',
+      icon: HandHelping,
+      category: 'TENDERS',
+      items: [],
     },
     {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
+      title: 'Past',
+      url: '#',
+      icon: Clock,
+      category: 'TENDERS',
+      items: [],
     },
     {
-      name: "Sales & Marketing",
-      url: "#",
+      title: 'Cashflow',
+      url: '#',
       icon: PieChart,
+      category: 'REPORTS',
+      items: [],
     },
     {
-      name: "Travel",
-      url: "#",
-      icon: Map,
+      title: 'Fleet',
+      url: '#',
+      icon: Truck,
+      category: 'REPORTS',
+      items: [],
+    },
+    {
+      title: 'Routes',
+      url: '#',
+      icon: Route,
+      category: 'REPORTS',
+      items: [],
+    },
+    {
+      title: 'Compliance',
+      url: '#',
+      icon: FileText,
+      category: 'REPORTS',
+      items: [],
+    },
+    {
+      title: 'Sustainability',
+      url: '#',
+      icon: Sprout,
+      category: 'REPORTS',
+      items: [],
+    },
+    {
+      title: 'Library',
+      url: '#',
+      icon: Files,
+      category: 'FILES',
+      items: [],
+    },
+    {
+      title: 'Connections',
+      url: '#',
+      icon: Unplug,
+      category: 'FILES',
+      items: [],
     },
   ],
+  projects: [],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible='icon' {...props}>
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
