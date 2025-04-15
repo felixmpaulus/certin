@@ -2,7 +2,6 @@
 
 import * as React from 'react'
 import {
-  Activity,
   Clock,
   Files,
   FileText,
@@ -12,14 +11,12 @@ import {
   PieChart,
   Route,
   Sprout,
-  Target,
   Truck,
   Unplug,
 } from 'lucide-react'
 
 import { NavMain } from '@/components/nav-main'
 import { NavUser } from '@/components/nav-user'
-import { TeamSwitcher } from '@/components/team-switcher'
 import {
   Sidebar,
   SidebarContent,
@@ -35,23 +32,6 @@ const data = {
     email: 'm@example.com',
     avatar: '/avatars/shadcn.jpg',
   },
-  teams: [
-    {
-      name: 'Acme Inc',
-      logo: Home,
-      plan: 'Enterprise',
-    },
-    {
-      name: 'Acme Corp.',
-      logo: Activity,
-      plan: 'Startup',
-    },
-    {
-      name: 'Evil Corp.',
-      logo: Target,
-      plan: 'Free',
-    },
-  ],
   navMain: [
     {
       title: 'Dashboard',
@@ -138,7 +118,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible='icon' {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <div className='h-10 bg-gray-100 rounded-lg' />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
