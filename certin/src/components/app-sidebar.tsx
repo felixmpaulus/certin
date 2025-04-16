@@ -13,6 +13,7 @@ import {
   Sprout,
   Truck,
   Unplug,
+  Upload,
 } from 'lucide-react'
 
 import { NavMain } from '@/components/nav-main'
@@ -93,6 +94,13 @@ const data = {
       url: '/dashboard/sustainability',
       icon: Sprout,
       category: 'REPORTS',
+      items: [],
+    },
+    {
+      title: 'Upload',
+      url: '/dashboard/upload',
+      icon: Upload,
+      category: 'FILES',
       items: [],
     },
     {
