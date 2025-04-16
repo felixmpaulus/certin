@@ -1,6 +1,7 @@
 'use client'
 
 import { ChevronRight, type LucideIcon } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import {
@@ -29,13 +30,19 @@ export function NavMain({
     }[]
   }[]
 }) {
+  const pathname = usePathname()
+
   // Group items by category
   const categorizedItems = items.reduce((acc, item) => {
     const category = item.category || ''
     if (!acc[category]) {
       acc[category] = []
     }
-    acc[category].push(item)
+
+    // Check if the current path matches this item's URL
+    const isActive = pathname === item.url
+    acc[category].push({ ...item, isActive })
+
     return acc
   }, {} as Record<string, typeof items>)
 
@@ -100,7 +107,7 @@ function NavMenuItem({
       >
         <SidebarMenuItem>
           <CollapsibleTrigger asChild>
-            <SidebarMenuButton tooltip={item.title}>
+            <SidebarMenuButton tooltip={item.title} data-active={item.isActive}>
               {item.icon && <item.icon />}
               <span>{item.title}</span>
               <ChevronRight className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
@@ -126,7 +133,7 @@ function NavMenuItem({
 
   return (
     <SidebarMenuItem key={item.title}>
-      <SidebarMenuButton asChild tooltip={item.title}>
+      <SidebarMenuButton asChild tooltip={item.title} data-active={item.isActive}>
         <a href={item.url}>
           {item.icon && <item.icon />}
           <span>{item.title}</span>

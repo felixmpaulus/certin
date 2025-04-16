@@ -12,10 +12,10 @@ export default function Home() {
         </p>
         <div className='flex gap-4 flex-col sm:flex-row'>
           <a
-            href='/auth/login'
+            href='/dashboard'
             className='px-6 py-3 rounded-md bg-black text-white hover:bg-black/90 transition-colors'
           >
-            Get Started
+            Dashboard
           </a>
           <a
             href='/about'
