@@ -1,11 +1,10 @@
+import { LOCALE_COOKIE_NAME } from '@/constants/constants'
 import { getRequestConfig } from 'next-intl/server'
 import { cookies, headers } from 'next/headers'
 
-export const COOKIE_NAME = 'NEXT_LOCALE'
-
 export const getLocale = async () => {
   const cookieStore = await cookies()
-  const localeCookie = cookieStore.get(COOKIE_NAME)
+  const localeCookie = cookieStore.get(LOCALE_COOKIE_NAME)
   const headersStore = await headers()
   const acceptLanguage = headersStore.get('accept-language')
   const preferredLocale = acceptLanguage ? acceptLanguage.split(',')[0].split('-')[0] : 'en'

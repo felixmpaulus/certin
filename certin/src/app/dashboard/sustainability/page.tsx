@@ -1,4 +1,6 @@
 import { useTranslations } from 'next-intl'
+import { LanguageSwitcher } from '@/components/language-switcher'
+
 export default function RunningPage() {
   const t = useTranslations('Sustainability')
   return (
@@ -7,6 +9,10 @@ export default function RunningPage() {
       <p className='text-muted-foreground'>
         View and manage your running things related to sustainability.
       </p>
+      <div className='mt-6'>
+        <h2 className='text-lg font-medium mb-2'>Change Language</h2>
+        <LanguageSwitcher />
+      </div>
     </div>
   )
 }

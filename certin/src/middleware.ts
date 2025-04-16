@@ -1,9 +1,9 @@
 import { updateSession } from '@/lib/supabase/middleware'
 import { type NextRequest } from 'next/server'
-import { COOKIE_NAME } from './i18n/request'
+import { LOCALE_COOKIE_NAME } from './constants/constants'
 
 export async function middleware(request: NextRequest) {
-  const localeCookie = request.cookies.get(COOKIE_NAME)
+  const localeCookie = request.cookies.get(LOCALE_COOKIE_NAME)
   const acceptLanguage = request.headers.get('accept-language')
   const preferredLocale = acceptLanguage ? acceptLanguage.split(',')[0].split('-')[0] : 'en'
   const locale = localeCookie?.value || preferredLocale || 'en'
@@ -11,7 +11,7 @@ export async function middleware(request: NextRequest) {
 
   // Set the locale cookie if it doesn't exist or needs updating
   if (!localeCookie || localeCookie.value !== locale) {
-    response.cookies.set(COOKIE_NAME, locale, {
+    response.cookies.set(LOCALE_COOKIE_NAME, locale, {
       path: '/',
       maxAge: 60 * 60 * 24 * 365, // 1 year
     })
