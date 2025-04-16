@@ -1,14 +1,12 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LogoutButton } from '@/components/logout-button'
 import { type User } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/client'
 import { useEffect, useState } from 'react'
 
 export function ClientNavigation() {
   const pathname = usePathname()
-  const isDashboard = pathname?.startsWith('/dashboard')
   const isLogin = pathname?.startsWith('/auth/login')
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
@@ -32,10 +30,6 @@ export function ClientNavigation() {
 
   if (isLogin) {
     return null
-  }
-
-  if (isDashboard) {
-    return <LogoutButton />
   }
 
   const linkTo = user ? '/dashboard' : '/auth/login'
