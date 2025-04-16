@@ -1,8 +1,23 @@
 import { updateSession } from '@/lib/supabase/middleware'
 import { type NextRequest } from 'next/server'
+import { COOKIE_NAME } from './i18n/request'
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request)
+  const localeCookie = request.cookies.get(COOKIE_NAME)
+  const acceptLanguage = request.headers.get('accept-language')
+  const preferredLocale = acceptLanguage ? acceptLanguage.split(',')[0].split('-')[0] : 'en'
+  const locale = localeCookie?.value || preferredLocale || 'en'
+  const response = await updateSession(request)
+
+  // Set the locale cookie if it doesn't exist or needs updating
+  if (!localeCookie || localeCookie.value !== locale) {
+    response.cookies.set(COOKIE_NAME, locale, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 365, // 1 year
+    })
+  }
+
+  return response
 }
 
 export const config = {
@@ -12,7 +27,7 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
-     * Feel free to modify this pattern to include more paths.
+     * - Static image files (svg, png, jpg, etc.)
      */
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
