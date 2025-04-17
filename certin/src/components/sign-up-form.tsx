@@ -17,6 +17,7 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  const isProd = process.env.NODE_ENV === 'production'
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -24,7 +25,7 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
     setIsLoading(true)
     setError(null)
 
-    if (password !== repeatPassword) {
+    if (isProd && password !== repeatPassword) {
       setError('Passwords do not match')
       setIsLoading(false)
       return
@@ -80,18 +81,20 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <div className='grid gap-2'>
-                <div className='flex items-center'>
-                  <Label htmlFor='repeat-password'>Repeat Password</Label>
+              {isProd && (
+                <div className='grid gap-2'>
+                  <div className='flex items-center'>
+                    <Label htmlFor='repeat-password'>Repeat Password</Label>
+                  </div>
+                  <Input
+                    id='repeat-password'
+                    type='password'
+                    required
+                    value={repeatPassword}
+                    onChange={(e) => setRepeatPassword(e.target.value)}
+                  />
                 </div>
-                <Input
-                  id='repeat-password'
-                  type='password'
-                  required
-                  value={repeatPassword}
-                  onChange={(e) => setRepeatPassword(e.target.value)}
-                />
-              </div>
+              )}
               {error && <p className='text-sm text-red-500'>{error}</p>}
               <Button type='submit' className='w-full' disabled={isLoading}>
                 {isLoading ? 'Creating an account...' : 'Sign up'}
