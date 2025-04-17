@@ -268,3 +268,70 @@ CREATE TRIGGER update_documents_updated_at BEFORE UPDATE ON public.documents FOR
 CREATE TRIGGER update_invoices_updated_at BEFORE UPDATE ON public.invoices FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 
+create policy "Users can delete their own documents"
+on "storage"."objects"
+as permissive
+for delete
+to authenticated
+using (((bucket_id = 'documents'::text) AND ((storage.foldername(name))[1] = (auth.uid())::text)));
+
+
+create policy "Users can delete their own files"
+on "storage"."objects"
+as permissive
+for delete
+to authenticated
+using (((bucket_id = 'file-upload'::text) AND ((auth.uid())::text = (storage.foldername(name))[1])));
+
+
+create policy "Users can update their own documents"
+on "storage"."objects"
+as permissive
+for update
+to authenticated
+using (((bucket_id = 'documents'::text) AND ((storage.foldername(name))[1] = (auth.uid())::text)));
+
+
+create policy "Users can update their own files"
+on "storage"."objects"
+as permissive
+for update
+to authenticated
+using (((bucket_id = 'file-upload'::text) AND ((auth.uid())::text = (storage.foldername(name))[1])));
+
+
+create policy "Users can upload their own documents"
+on "storage"."objects"
+as permissive
+for insert
+to authenticated
+with check (((bucket_id = 'documents'::text) AND ((storage.foldername(name))[1] = (auth.uid())::text)));
+
+
+create policy "Users can upload their own files"
+on "storage"."objects"
+as permissive
+for insert
+to authenticated
+with check (((bucket_id = 'file-upload'::text) AND ((auth.uid())::text = (storage.foldername(name))[1])));
+
+
+create policy "Users can view their own documents"
+on "storage"."objects"
+as permissive
+for select
+to authenticated
+using (((bucket_id = 'documents'::text) AND ((storage.foldername(name))[1] = (auth.uid())::text)));
+
+
+create policy "Users can view their own files"
+on "storage"."objects"
+as permissive
+for select
+to authenticated
+using (((bucket_id = 'file-upload'::text) AND ((auth.uid())::text = (storage.foldername(name))[1])));
+
+
+CREATE TRIGGER on_file_upload AFTER INSERT ON storage.objects FOR EACH ROW EXECUTE FUNCTION supabase_functions.http_request('http://host.docker.internal:3000/api/on_staging_upload', 'POST', '{"Content-type":"application/json"}', '{}', '5000');
+
+
