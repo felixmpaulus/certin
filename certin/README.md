@@ -34,3 +34,34 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## API Routes
+
+### on-staging-upload Route
+
+The `on-staging-upload` route handler is a Next.js API route that processes document uploads. It:
+
+1. Takes a document upload webhook from Supabase Storage
+2. Creates a document record in the database
+3. Downloads the file from Supabase Storage
+4. Processes it with Google Cloud Document AI
+5. Updates the document record with the processed data
+
+#### Environment Variables Required
+
+Make sure to add the following environment variables to your `.env.local` file:
+
+```
+# Supabase Configuration
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+
+# Google Cloud Document AI Configuration
+GOOGLE_CLOUD_PROJECT_ID=your-google-cloud-project-id
+GOOGLE_CLOUD_LOCATION=us-central1
+GOOGLE_CLOUD_PROCESSOR_ID=your-processor-id
+GOOGLE_APPLICATION_CREDENTIALS={"your":"google-credentials-json"}
+```
+
+#### Usage
+
+To use this API route, send a POST request to `/api/on-staging-upload` with the same payload format that was previously sent to the Supabase Edge Function.
