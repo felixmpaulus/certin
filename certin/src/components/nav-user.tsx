@@ -21,6 +21,9 @@ import {
 } from '@/components/ui/sidebar'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { setLanguageCookie, getLanguageCookie } from '@/i18n/client'
+import { USAFlag } from '@/components/icons/usa-flag'
+import { FrenchFlag } from '@/components/icons/french-flag'
 
 export function NavUser({
   user,
@@ -34,10 +37,28 @@ export function NavUser({
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const router = useRouter()
+  const [currentLanguage, setCurrentLanguage] = useState<string>('en')
+
+  // Available languages with flag components
+  const languages = [
+    { code: 'en', name: 'English', icon: USAFlag },
+    { code: 'fr', name: 'Français', icon: FrenchFlag },
+  ]
+
   // Only show theme UI after component has mounted to avoid hydration errors
   useEffect(() => {
     setMounted(true)
+    setCurrentLanguage(getLanguageCookie())
   }, [])
+
+  const handleLanguageChange = (lang: string) => {
+    // Set the cookie using the client utility
+    setLanguageCookie(lang)
+    setCurrentLanguage(lang)
+
+    // Reload the page to apply the language change
+    router.refresh()
+  }
 
   const logout = async () => {
     const supabase = createClient()
@@ -82,13 +103,6 @@ export function NavUser({
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            {/* <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator /> */}
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <BadgeCheck />
@@ -108,6 +122,25 @@ export function NavUser({
                   {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
                 </DropdownMenuItem>
               )}
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              {languages.map((language) => {
+                const FlagIcon = language.icon
+                return (
+                  <DropdownMenuItem
+                    key={language.code}
+                    onClick={() => handleLanguageChange(language.code)}
+                    className='flex items-center justify-between'
+                  >
+                    <div className='flex items-center gap-2'>
+                      <FlagIcon size={16} className='shrink-0' />
+                      <span>{language.name}</span>
+                    </div>
+                    {currentLanguage === language.code && <span className='ml-2'>✓</span>}
+                  </DropdownMenuItem>
+                )
+              })}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={logout}>
