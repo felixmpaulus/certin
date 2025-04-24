@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
         {
           success: false,
           error: 'Invalid or missing payload',
-          details: error.message,
+          details: error instanceof Error ? error.message : 'Unknown error',
         },
         { status: 400 }
       )
@@ -137,7 +137,11 @@ export async function POST(req: NextRequest) {
       credentials = JSON.parse(GOOGLE_APPLICATION_CREDENTIALS)
     } catch (error) {
       console.error('Failed to parse Google credentials:', error)
-      throw new Error(`Invalid Google credentials format: ${error.message}`)
+      throw new Error(
+        `Invalid Google credentials format: ${
+          error instanceof Error ? error.message : 'Unknown error'
+        }`
+      )
     }
 
     // Get access token
@@ -221,8 +225,13 @@ export async function POST(req: NextRequest) {
     return Response.json(
       {
         success: false,
-        error: error.message,
-        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
+        error: error instanceof Error ? error.message : 'Unknown error',
+        stack:
+          process.env.NODE_ENV === 'development'
+            ? error instanceof Error
+              ? error.stack
+              : undefined
+            : undefined,
       },
       {
         status: 500,

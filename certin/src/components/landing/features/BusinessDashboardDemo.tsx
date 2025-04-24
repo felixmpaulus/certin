@@ -1,5 +1,5 @@
 import React from 'react'
-import { ChevronRight, BarChart, Star, DollarSign, Calendar, BarChart } from 'lucide-react'
+import { ChevronRight, BarChart, Star, DollarSign, Calendar } from 'lucide-react'
 import { CardTitle } from '@/components/ui/card'
 
 export const BusinessDashboardDemo: React.FC<{ id: string }> = () => {

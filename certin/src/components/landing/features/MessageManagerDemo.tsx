@@ -1,7 +1,7 @@
 import React from 'react'
 import { MessageSquare, Clock, BellRing, LucideIcon, FileBarChart, Banknote } from 'lucide-react'
-import { AnimatedList } from '@/components/magicui/animated-list'
 import { CardTitle } from '@/components/ui/card'
+import { AnimatedList } from '@/components/magicui/animated-list'
 
 // Define available tones and their corresponding colors
 const colorMap = {

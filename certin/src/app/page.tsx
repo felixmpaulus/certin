@@ -1,5 +1,5 @@
 import { Header } from '@/components/Header'
-import { Hero } from '@/components/landing/hero'
+import { Hero } from '@/components/landing/Hero'
 import { Features } from '@/components/landing/Features'
 import { Stats } from '@/components/landing/Stats'
 import { CallToAction } from '@/components/landing/CallToAction'

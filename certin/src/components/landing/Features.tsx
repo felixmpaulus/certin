@@ -1,4 +1,4 @@
-import { FeatureSection } from '@/components/features/FeatureSection'
+import { FeatureSection } from '@/components/landing/features/FeatureSection'
 import { featuresData } from '@/data/featureData'
 import { MessageManagerDemo } from '@/components/landing/features/MessageManagerDemo'
 import { BusinessDashboardDemo } from '@/components/landing/features/BusinessDashboardDemo'
@@ -23,7 +23,7 @@ export function Features() {
             <FeatureSection
               key={feature.id}
               feature={feature}
-              DemoComponent={demoComponentMap[feature.demoType]}
+              DemoComponent={demoComponentMap[feature.demoType as keyof typeof demoComponentMap]}
             />
           ))}
         </div>
